@@ -1,0 +1,12 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+    "minecraft:pumpkin",
+    "minecraft:sugar",
+    "#c:eggs"
+  ],
+  "result": {
+    "id": "minecraft:pumpkin_pie",
+    "count": 1
+  }
+}

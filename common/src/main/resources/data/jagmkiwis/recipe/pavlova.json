@@ -1,0 +1,13 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+    "minecraft:sugar",
+    "#c:fruits/kiwi",
+    "#jagmkiwis:pavlova_toppings",
+    "#c:eggs"
+  ],
+  "result": {
+    "id": "jagmkiwis:pavlova",
+    "count": 1
+  }
+}

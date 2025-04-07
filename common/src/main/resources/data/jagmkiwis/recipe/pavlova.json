@@ -4,7 +4,7 @@
     "minecraft:sugar",
     "#c:fruits/kiwi",
     "#jagmkiwis:pavlova_toppings",
-    "#c:eggs"
+    "#minecraft:eggs"
   ],
   "result": {
     "id": "jagmkiwis:pavlova",

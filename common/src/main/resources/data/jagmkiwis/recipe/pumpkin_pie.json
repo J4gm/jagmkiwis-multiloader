@@ -3,7 +3,7 @@
   "ingredients": [
     "minecraft:pumpkin",
     "minecraft:sugar",
-    "#c:eggs"
+    "#minecraft:eggs"
   ],
   "result": {
     "id": "minecraft:pumpkin_pie",

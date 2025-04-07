@@ -26,10 +26,10 @@ public class FabricClient implements ClientModInitializer {
             content.addAfter(Items.LLAMA_SPAWN_EGG, KiwiModItems.KIWI_SPAWN_EGG.get());
         });
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(content -> {
-            content.addAfter(Items.EGG, KiwiModItems.KIWI_EGG.get());
+            content.addAfter(Items.BLUE_EGG, KiwiModItems.KIWI_EGG.get());
         });
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT).register(content -> {
-            content.addAfter(Items.EGG, KiwiModItems.KIWI_EGG.get());
+            content.addAfter(Items.BLUE_EGG, KiwiModItems.KIWI_EGG.get());
         });
     }
 

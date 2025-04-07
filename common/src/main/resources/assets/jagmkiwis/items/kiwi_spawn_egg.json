@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minecraft:item/template_spawn_egg",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -6850486
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -4268032
-      }
-    ]
+    "model": "jagmkiwis:item/kiwi_spawn_egg"
   }
 }

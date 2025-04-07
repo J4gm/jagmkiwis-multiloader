@@ -67,7 +67,7 @@ public class KiwiEggItem extends EggItem {
 										KiwiEntity kiwi = KiwiModEntities.KIWI.get().create(this.level(), EntitySpawnReason.TRIGGERED);
 										if (kiwi != null) {
 											kiwi.setAge(-24000);
-											kiwi.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
+											kiwi.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
 											if (!kiwi.fudgePositionAfterSizeChange(EntityDimensions.fixed(0.0F, 0.0F))) {
 												break;
 											}

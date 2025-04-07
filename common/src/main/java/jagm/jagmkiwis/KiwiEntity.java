@@ -1,5 +1,6 @@
 package jagm.jagmkiwis;
 
+import java.util.Optional;
 import java.util.function.IntFunction;
 
 import net.minecraft.core.BlockPos;
@@ -42,7 +43,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 
-public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Variant>, RangedAttackMob {
+public class KiwiEntity extends Animal implements RangedAttackMob {
 
 	private static final EntityDataAccessor<Integer> DATA_TYPE_ID = SynchedEntityData.defineId(KiwiEntity.class, EntityDataSerializers.INT);
 	private static final int CHANCE_OF_LASERS = 5;
@@ -147,7 +148,7 @@ public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Varia
 
 	@Override
 	public void playAmbientSound() {
-		if (this.level().dimensionType().hasFixedTime() || this.level().isNight()) {
+		if (this.level().dimensionType().hasFixedTime() || this.level().isDarkOutside()) {
 			super.playAmbientSound();
 		}
 	}
@@ -177,8 +178,7 @@ public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Varia
 		return 160;
 	}
 
-	@Override
-	public void setVariant(Variant variant) {
+	private void setVariant(Variant variant) {
 		if (variant == Variant.LASER) {
 			this.getAttribute(Attributes.ARMOR).setBaseValue(8.0D);
 			this.goalSelector.addGoal(3, new RangedAttackGoal(this, 1.0D, 20, 40, 20.0F));
@@ -191,7 +191,6 @@ public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Varia
 		this.entityData.set(DATA_TYPE_ID, variant.id);
 	}
 
-	@Override
 	public Variant getVariant() {
 		return Variant.byId(this.entityData.get(DATA_TYPE_ID));
 	}
@@ -211,7 +210,8 @@ public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Varia
 	@Override
 	public void readAdditionalSaveData(CompoundTag compoundTag) {
 		super.readAdditionalSaveData(compoundTag);
-		this.setVariant(Variant.byId(compoundTag.getInt("KiwiType")));
+		Optional<Integer> id = compoundTag.getInt("KiwiType");
+		this.setVariant(id.isPresent() ? Variant.byId(id.get()) : Variant.NORMAL);
 	}
 
 	@Override

@@ -17,7 +17,6 @@ public class FabricClient implements ClientModInitializer {
         EntityRendererRegistry.register(KiwiModEntities.KIWI.get(), KiwiRenderer::new);
         EntityRendererRegistry.register(KiwiModEntities.LASER_BEAM.get(), LaserBeamRenderer::new);
         EntityModelLayerRegistry.registerModelLayer(KiwiModel.KIWI_LAYER, KiwiModel::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(KiwiModel.BABY_KIWI_LAYER, () -> KiwiModel.createBodyLayer().apply(KiwiModel.BABY_TRANSFORMER));
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(content -> {
             content.addAfter(Items.MELON_SLICE, KiwiModItems.KIWI_FRUIT.get());
             content.addAfter(Items.PUMPKIN_PIE, KiwiModItems.PAVLOVA.get());

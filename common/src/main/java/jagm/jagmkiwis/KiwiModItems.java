@@ -2,9 +2,6 @@ package jagm.jagmkiwis;
 
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.Item;
@@ -29,7 +26,7 @@ public class KiwiModItems {
     );
     public static final Supplier<Item> KIWI_SPAWN_EGG = createItemSupplier(
             "kiwi_spawn_egg",
-            props -> new SpawnEggItem(KiwiModEntities.KIWI.get(), props),
+            props -> new SpawnEggItem(KiwiModEntities.KIWI.get(), 0x97784A, 0xBEE000, props),
             new Item.Properties()
     );
     public static final Supplier<Item> PAVLOVA = createItemSupplier(
@@ -39,7 +36,7 @@ public class KiwiModItems {
     );
 
     private static Supplier<Item> createItemSupplier (String name, Function<Item.Properties, Item> factory, Item.Properties props){
-        Supplier<Item> itemSupplier = Suppliers.memoize(() -> factory.apply(props.setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, name)))));
+        Supplier<Item> itemSupplier = Suppliers.memoize(() -> factory.apply(props));
         ITEMS_COMMON.put(name, itemSupplier);
         return itemSupplier;
     }

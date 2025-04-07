@@ -1,10 +1,18 @@
 {
   "type": "crafting_shapeless",
   "ingredients": [
-    "minecraft:sugar",
-    "#c:fruits/kiwi",
-    "#jagmkiwis:pavlova_toppings",
-    "#c:eggs"
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "tag": "c:fruits/kiwi"
+    },
+    {
+      "tag": "jagmkiwis:pavlova_toppings"
+    },
+    {
+      "tag": "c:eggs"
+    }
   ],
   "result": {
     "id": "jagmkiwis:pavlova",

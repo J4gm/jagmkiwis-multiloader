@@ -62,7 +62,7 @@ public class KiwiDigGoal extends Goal {
 				LootTable diggingLoot = serverLevel.getServer().reloadableRegistries().getLootTable(DIGGING_LOOT);
 				LootParams.Builder lootParams$builder = new LootParams.Builder(serverLevel);
 				LootParams lootParams = lootParams$builder.create(LootContextParamSets.EMPTY);
-				diggingLoot.getRandomItems(lootParams, this.mob.getLootTableSeed(), stack -> this.mob.spawnAtLocation(serverLevel, stack));
+				diggingLoot.getRandomItems(lootParams, this.mob.getLootTableSeed(), this.mob::spawnAtLocation);
 				this.mob.gameEvent(GameEvent.ENTITY_PLACE);
 			}
 

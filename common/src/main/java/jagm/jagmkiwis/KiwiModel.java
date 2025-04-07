@@ -1,29 +1,28 @@
 package jagm.jagmkiwis;
 
-import net.minecraft.client.model.BabyModelTransform;
-import net.minecraft.client.model.EntityModel;
+import com.google.common.collect.ImmutableList;
+import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 
-import java.util.Set;
-
-public class KiwiModel extends EntityModel<KiwiRenderState> {
+public class KiwiModel<T extends Entity> extends AgeableListModel<T> {
 
 	public static final ModelLayerLocation KIWI_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, "kiwi"), "main");
-	public static final ModelLayerLocation BABY_KIWI_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, "baby_kiwi"), "main");
 
-	public static final MeshTransformer BABY_TRANSFORMER = new BabyModelTransform(Set.of("head"));
 	private final ModelPart head;
 	private final ModelPart leftLeg;
 	private final ModelPart rightLeg;
 	private final ModelPart body;
 
+	private float headXRot;
+
 	public KiwiModel(ModelPart root) {
-		super(root);
+		super(false, 2.0F, 0.5F);
 		this.head = root.getChild("head");
 		this.leftLeg = root.getChild("left_leg");
 		this.rightLeg = root.getChild("right_leg");
@@ -71,13 +70,28 @@ public class KiwiModel extends EntityModel<KiwiRenderState> {
 	}
 
 	@Override
-	public void setupAnim(KiwiRenderState renderState) {
-		super.setupAnim(renderState);
-		this.head.y = renderState.headEatPositionScale + (renderState.isBaby ? 2.0F : 0.0F);
-		this.head.xRot = renderState.headEatAngleScale;
-		this.head.yRot = renderState.yRot * ((float) Math.PI / 180F);
-		this.rightLeg.xRot = Mth.cos(renderState.walkAnimationPos * 0.6662F) * 1.4F * renderState.walkAnimationSpeed;
-		this.leftLeg.xRot = Mth.cos(renderState.walkAnimationPos * 0.6662F + (float) Math.PI) * 1.4F * renderState.walkAnimationSpeed;
+	public void prepareMobModel(T entity, float limbSwing, float limbSwingAmount, float partialTicks) {
+		super.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTicks);
+		KiwiEntity kiwi = (KiwiEntity) entity;
+		this.head.y = 17.5F + kiwi.getHeadEatPositionScale(partialTicks);
+		this.headXRot = kiwi.getHeadEatAngleScale(partialTicks);
 	}
 
+	@Override
+	protected Iterable<ModelPart> headParts() {
+		return ImmutableList.of(this.head);
+	}
+
+	@Override
+	protected Iterable<ModelPart> bodyParts() {
+		return ImmutableList.of(this.body, this.leftLeg, this.rightLeg);
+	}
+
+	@Override
+	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.head.xRot = this.headXRot;
+		this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
+		this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+		this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+	}
 }

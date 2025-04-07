@@ -3,10 +3,13 @@ package jagm.jagmkiwis;
 import java.util.function.IntFunction;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -40,10 +43,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.Vec3;
 
 public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Variant>, RangedAttackMob {
 
+	public static final ResourceKey<LootTable> KIWI_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, "entities/kiwi"));
 	private static final EntityDataAccessor<Integer> DATA_TYPE_ID = SynchedEntityData.defineId(KiwiEntity.class, EntityDataSerializers.INT);
 	private static final int CHANCE_OF_LASERS = 5;
 	private static final EntityDimensions BABY_DIMENSIONS = KiwiModEntities.KIWI.get().getDimensions().scale(0.75F).withEyeHeight(0.25F);
@@ -70,9 +75,9 @@ public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Varia
 	}
 
 	@Override
-	protected void customServerAiStep(ServerLevel level) {
+	protected void customServerAiStep() {
 		this.digAnimationTick = this.digGoal.getDigAnimationTick();
-		super.customServerAiStep(level);
+		super.customServerAiStep();
 	}
 
 	@Override
@@ -80,9 +85,9 @@ public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Varia
 		if (this.level().isClientSide) {
 			this.digAnimationTick = Math.max(0, this.digAnimationTick - 1);
 		}
-		if (this.level() instanceof ServerLevel serverLevel && this.isAlive() && !this.isBaby() && --this.eggTime <= 0) {
+		if (this.level() instanceof ServerLevel && this.isAlive() && !this.isBaby() && --this.eggTime <= 0) {
 			this.playSound(KiwiModSounds.KIWI_LAY_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-			this.spawnAtLocation(serverLevel, KiwiModItems.KIWI_EGG.get());
+			this.spawnAtLocation(KiwiModItems.KIWI_EGG.get());
 			this.gameEvent(GameEvent.ENTITY_PLACE);
 			this.eggTime = this.random.nextInt(12000) + 12000;
 		}
@@ -124,7 +129,7 @@ public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Varia
 
 	@Override
 	public KiwiEntity getBreedOffspring(ServerLevel world, AgeableMob kiwi) {
-		KiwiEntity babyKiwi = KiwiModEntities.KIWI.get().create(world, EntitySpawnReason.BREEDING);
+		KiwiEntity babyKiwi = KiwiModEntities.KIWI.get().create(world);
 		boolean isLaserVariant = this.getRandom().nextInt(100) < CHANCE_OF_LASERS;
         if (babyKiwi != null) {
 			babyKiwi.setVariant(isLaserVariant ? Variant.LASER : Variant.NORMAL);
@@ -133,11 +138,16 @@ public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Varia
 	}
 	
 	public static AttributeSupplier.Builder createAttributes() {
-		return Animal.createAnimalAttributes()
+		return LivingEntity.createLivingAttributes()
 				.add(Attributes.ATTACK_DAMAGE, 3.0D)
 				.add(Attributes.MAX_HEALTH, 5.0D)
 				.add(Attributes.MOVEMENT_SPEED, 0.35D)
 				.add(Attributes.FOLLOW_RANGE, 40.0D);
+	}
+
+	@Override
+	protected ResourceKey<LootTable> getDefaultLootTable() {
+		return KIWI_LOOT_TABLE;
 	}
 
 	@Override
@@ -183,7 +193,7 @@ public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Varia
 			this.getAttribute(Attributes.ARMOR).setBaseValue(8.0D);
 			this.goalSelector.addGoal(3, new RangedAttackGoal(this, 1.0D, 20, 40, 20.0F));
 			this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
-			this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, true, (target, level) -> !(target instanceof Creeper)));
+			this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, true, target -> !(target instanceof Creeper)));
 		}
 		else {
 			this.goalSelector.addGoal(1, new PanicGoal(this, 1.0D));
@@ -215,10 +225,10 @@ public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Varia
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, EntitySpawnReason spawnReason, SpawnGroupData spawnGroupData) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType mobSpawnType, SpawnGroupData spawnGroupData) {
 		boolean isLaserVariant = levelAccessor.getRandom().nextInt(100) < CHANCE_OF_LASERS;
 		this.setVariant(isLaserVariant ? Variant.LASER : Variant.NORMAL);
-		return super.finalizeSpawn(levelAccessor, difficulty, spawnReason, spawnGroupData);
+		return super.finalizeSpawn(levelAccessor, difficulty, mobSpawnType, spawnGroupData);
 	}
 	
 	@Override

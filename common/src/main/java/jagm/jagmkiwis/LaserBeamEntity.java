@@ -66,7 +66,7 @@ public class LaserBeamEntity extends AbstractArrow {
         }
         if(this.level() instanceof ServerLevel serverLevel){
             boolean flag = target.getType() == EntityType.ENDERMAN;
-            if (target.hurtServer(serverLevel, damagesource, (float) i)) {
+            if (target.hurt(damagesource, (float) i)) {
                 if (flag) {
                     return;
                 }

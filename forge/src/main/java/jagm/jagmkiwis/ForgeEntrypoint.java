@@ -2,7 +2,7 @@ package jagm.jagmkiwis;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -28,9 +28,9 @@ public class ForgeEntrypoint {
     static final DeferredRegister<EntityType<?>> ENTITIES_FORGE = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, KiwiMod.MOD_ID);
     static final DeferredRegister<SoundEvent> SOUNDS_FORGE = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, KiwiMod.MOD_ID);
 
-    public ForgeEntrypoint(FMLJavaModLoadingContext context) {
+    public ForgeEntrypoint() {
         KiwiMod.init();
-        IEventBus eventBus = context.getModEventBus();
+        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         KiwiModItems.ITEMS_COMMON.forEach(ITEMS_FORGE::register);
         ENTITIES_FORGE.register(KiwiModEntities.KIWI_NAME, KiwiModEntities.KIWI);
         ENTITIES_FORGE.register(KiwiModEntities.LASER_BEAM_NAME, KiwiModEntities.LASER_BEAM);
@@ -50,7 +50,7 @@ public class ForgeEntrypoint {
 
         @SubscribeEvent
         public static void onRegisterSpawnPlacements(SpawnPlacementRegisterEvent event) {
-            event.register(KiwiModEntities.KIWI.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
+            event.register(KiwiModEntities.KIWI.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
                     SpawnPlacementRegisterEvent.Operation.REPLACE);
         }
 

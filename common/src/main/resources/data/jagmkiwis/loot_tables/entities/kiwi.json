@@ -10,13 +10,12 @@
           "name": "jagmkiwis:kiwi_fruit",
           "functions": [
             {
-              "function": "minecraft:enchanted_count_increase",
+              "function": "minecraft:looting_enchant",
               "count": {
                 "type": "minecraft:uniform",
                 "min": 0,
                 "max": 1
-              },
-              "enchantment": "minecraft:looting"
+              }
             }
           ]
         }

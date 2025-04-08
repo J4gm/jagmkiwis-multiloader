@@ -27,7 +27,7 @@ public class LaserBeamEntity extends AbstractArrow {
     }
 
     @Override
-    protected ItemStack getDefaultPickupItem() {
+    protected ItemStack getPickupItem() {
         // Do not set to null or empty; this causes a crash when saving the entity.
         return new ItemStack(Items.ARROW);
     }
@@ -70,15 +70,17 @@ public class LaserBeamEntity extends AbstractArrow {
                 if (flag) {
                     return;
                 }
-                if (target instanceof LivingEntity livingEntity) {
-                    if(shooter instanceof LivingEntity) {
-                        EnchantmentHelper.doPostAttackEffects(serverLevel, target, damagesource);
+                if (target instanceof LivingEntity) {
+                    LivingEntity livingentity = (LivingEntity) target;
+                    Level level = this.level();
+                    if (!level.isClientSide && shooter instanceof LivingEntity) {
+                        EnchantmentHelper.doPostHurtEffects(livingentity, shooter);
+                        EnchantmentHelper.doPostDamageEffects((LivingEntity) shooter, livingentity);
                     }
-                    this.doPostHurtEffects(livingEntity);
+                    this.doPostHurtEffects(livingentity);
                 }
             }
         }
-
         this.discard();
     }
 

@@ -6,8 +6,8 @@ import net.minecraft.resources.ResourceLocation;
 
 public class KiwiRenderer extends MobRenderer<KiwiEntity, KiwiModel<KiwiEntity>> {
 
-	private static final ResourceLocation NORMAL_KIWI = ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, "textures/entity/kiwi.png");
-	private static final ResourceLocation LASER_KIWI = ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, "textures/entity/laser_kiwi.png");
+	private static final ResourceLocation NORMAL_KIWI = new ResourceLocation(KiwiMod.MOD_ID, "textures/entity/kiwi.png");
+	private static final ResourceLocation LASER_KIWI = new ResourceLocation(KiwiMod.MOD_ID, "textures/entity/laser_kiwi.png");
 
 	public KiwiRenderer(Context context) {
 		super(context, new KiwiModel<>(context.bakeLayer(KiwiModel.KIWI_LAYER)), 0.3F);

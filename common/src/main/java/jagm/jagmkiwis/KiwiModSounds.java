@@ -19,7 +19,7 @@ public class KiwiModSounds {
     public static final Supplier<SoundEvent> LASER_SHOOT = createSoundEventSupplier("laser_shoot");
 
     private static Supplier<SoundEvent> createSoundEventSupplier (String name) {
-        Supplier<SoundEvent> soundEventSupplier = Suppliers.memoize(() -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, name)));
+        Supplier<SoundEvent> soundEventSupplier = Suppliers.memoize(() -> SoundEvent.createVariableRangeEvent(new ResourceLocation(KiwiMod.MOD_ID, name)));
         SOUNDS_COMMON.put(name, soundEventSupplier);
         return soundEventSupplier;
     }

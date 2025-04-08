@@ -2,20 +2,17 @@
   "type": "crafting_shapeless",
   "ingredients": [
     {
+      "item": "minecraft:pumpkin"
+    },
+    {
       "item": "minecraft:sugar"
-    },
-    {
-      "tag": "c:fruits/kiwi"
-    },
-    {
-      "tag": "jagmkiwis:pavlova_toppings"
     },
     {
       "tag": "c:eggs"
     }
   ],
   "result": {
-    "id": "jagmkiwis:pavlova",
+    "item": "minecraft:pumpkin_pie",
     "count": 1
   }
 }

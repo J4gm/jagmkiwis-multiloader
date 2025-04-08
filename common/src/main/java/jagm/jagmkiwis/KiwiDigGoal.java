@@ -2,8 +2,6 @@ package jagm.jagmkiwis;
 
 import java.util.EnumSet;
 
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -18,7 +16,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 public class KiwiDigGoal extends Goal {
 
 	private final Mob mob;
-	public static final ResourceKey<LootTable> DIGGING_LOOT = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, "entities/kiwi_diggables"));
+	public static final ResourceLocation DIGGING_LOOT = new ResourceLocation(KiwiMod.MOD_ID, "entities/kiwi_diggables");
 	private int digAnimationTick;
 
 	public KiwiDigGoal(Mob mob) {
@@ -59,7 +57,7 @@ public class KiwiDigGoal extends Goal {
 			Level level = this.mob.level();
 			if (level.getServer() != null && level instanceof ServerLevel serverLevel && this.mob.isAlive()) {
 				this.mob.playSound(KiwiModSounds.KIWI_DIG.get(), 1.0F, (this.mob.getRandom().nextFloat() - this.mob.getRandom().nextFloat()) * 0.2F + 1.0F);
-				LootTable diggingLoot = serverLevel.getServer().reloadableRegistries().getLootTable(DIGGING_LOOT);
+				LootTable diggingLoot = serverLevel.getServer().getLootData().getLootTable(DIGGING_LOOT);
 				LootParams.Builder lootParams$builder = new LootParams.Builder(serverLevel);
 				LootParams lootParams = lootParams$builder.create(LootContextParamSets.EMPTY);
 				diggingLoot.getRandomItems(lootParams, this.mob.getLootTableSeed(), this.mob::spawnAtLocation);

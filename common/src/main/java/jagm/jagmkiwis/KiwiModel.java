@@ -12,7 +12,7 @@ import net.minecraft.world.entity.Entity;
 
 public class KiwiModel<T extends Entity> extends AgeableListModel<T> {
 
-	public static final ModelLayerLocation KIWI_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, "kiwi"), "main");
+	public static final ModelLayerLocation KIWI_LAYER = new ModelLayerLocation(new ResourceLocation(KiwiMod.MOD_ID, "kiwi"), "main");
 
 	private final ModelPart head;
 	private final ModelPart leftLeg;

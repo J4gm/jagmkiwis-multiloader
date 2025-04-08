@@ -32,7 +32,7 @@ public class KiwiModItems {
     public static final Supplier<Item> PAVLOVA = createItemSupplier(
             "pavlova",
             Item::new,
-            new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationModifier(0.6F).build())
+            new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.6F).build())
     );
 
     private static Supplier<Item> createItemSupplier (String name, Function<Item.Properties, Item> factory, Item.Properties props){

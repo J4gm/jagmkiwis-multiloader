@@ -3,17 +3,14 @@ package jagm.jagmkiwis;
 import java.util.function.IntFunction;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
@@ -39,19 +36,20 @@ import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.Vec3;
 
 public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Variant>, RangedAttackMob {
 
-	public static final ResourceKey<LootTable> KIWI_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, "entities/kiwi"));
+	public static final ResourceLocation KIWI_LOOT_TABLE = new ResourceLocation(KiwiMod.MOD_ID, "entities/kiwi");
 	private static final EntityDataAccessor<Integer> DATA_TYPE_ID = SynchedEntityData.defineId(KiwiEntity.class, EntityDataSerializers.INT);
 	private static final int CHANCE_OF_LASERS = 5;
-	private static final EntityDimensions BABY_DIMENSIONS = KiwiModEntities.KIWI.get().getDimensions().scale(0.75F).withEyeHeight(0.25F);
+	private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.WHEAT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.BEETROOT_SEEDS, Items.TORCHFLOWER_SEEDS, Items.PITCHER_POD);
 
 	private KiwiDigGoal digGoal;
 	private int digAnimationTick;
@@ -66,12 +64,17 @@ public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Varia
 		this.digGoal = new KiwiDigGoal(this);
 		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-		this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, stack -> stack.is(ItemTags.CHICKEN_FOOD), false));
+		this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, FOOD_ITEMS, false));
 		this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1D));
 		this.goalSelector.addGoal(5, new AvoidEntityGoal<>(this, Cat.class, 8.0F, 1.0D, 1.0D));
 		this.goalSelector.addGoal(6, this.digGoal);
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+	}
+
+	@Override
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
+		return this.isBaby() ? size.height : size.height * 0.8125F;
 	}
 
 	@Override
@@ -96,7 +99,7 @@ public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Varia
 
 	@Override
 	public boolean isFood(ItemStack stack) {
-		return stack.is(ItemTags.CHICKEN_FOOD);
+		return FOOD_ITEMS.test(stack);
 	}
 
 	@Override
@@ -146,7 +149,7 @@ public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Varia
 	}
 
 	@Override
-	protected ResourceKey<LootTable> getDefaultLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return KIWI_LOOT_TABLE;
 	}
 
@@ -207,9 +210,9 @@ public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Varia
 	}
 
 	@Override
-	protected void defineSynchedData(SynchedEntityData.Builder builder) {
-		super.defineSynchedData(builder);
-		builder.define(DATA_TYPE_ID, Variant.NORMAL.id);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(DATA_TYPE_ID, Variant.NORMAL.id);
 	}
 
 	@Override
@@ -225,10 +228,10 @@ public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Varia
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType mobSpawnType, SpawnGroupData spawnGroupData) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType mobSpawnType, SpawnGroupData spawnGroupData, CompoundTag compoundTag) {
 		boolean isLaserVariant = levelAccessor.getRandom().nextInt(100) < CHANCE_OF_LASERS;
 		this.setVariant(isLaserVariant ? Variant.LASER : Variant.NORMAL);
-		return super.finalizeSpawn(levelAccessor, difficulty, mobSpawnType, spawnGroupData);
+		return super.finalizeSpawn(levelAccessor, difficulty, mobSpawnType, spawnGroupData, compoundTag);
 	}
 	
 	@Override
@@ -243,11 +246,6 @@ public class KiwiEntity extends Animal implements VariantHolder<KiwiEntity.Varia
 		if(!this.isSilent()) {
 			this.playSound(KiwiModSounds.LASER_SHOOT.get());
 		}
-	}
-
-	@Override
-	public EntityDimensions getDefaultDimensions(Pose pose) {
-		return this.isBaby() ? BABY_DIMENSIONS : super.getDefaultDimensions(pose);
 	}
 
 	public enum Variant implements StringRepresentable {

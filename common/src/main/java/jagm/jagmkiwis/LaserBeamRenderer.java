@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class LaserBeamRenderer extends ArrowRenderer<LaserBeamEntity>{
 
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, "textures/entity/laser_beam.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(KiwiMod.MOD_ID, "textures/entity/laser_beam.png");
 
     public LaserBeamRenderer(Context context) {
         super(context);

@@ -10,7 +10,7 @@
   "spawners": [
     {
       "type": "jagmkiwis:kiwi",
-      "weight": 20,
+      "weight": 10,
       "minCount": 3,
       "maxCount": 4
     }

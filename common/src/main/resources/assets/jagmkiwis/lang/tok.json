@@ -10,5 +10,10 @@
 	"jagmkiwis.subtitle.kiwi_death": "waso kili li moli",
 	"jagmkiwis.subtitle.kiwi_lay_egg": "waso kili li pana e sike mama",
 	"jagmkiwis.subtitle.kiwi_dig": "waso kili li alasa",
-	"jagmkiwis.subtitle.laser_shoot": "piju!"
+	"jagmkiwis.subtitle.laser_shoot": "piju!",
+	"tag.item.c.eggs": "sike mama",
+	"tag.item.c.fruits.kiwi": "kili waso",
+	"tag.item.forge.eggs": "sike mama",
+	"tag.item.forge.fruits.kiwi": "kili waso",
+	"tag.item.jagmkiwis.pavlova_toppings": "kili pi pan suwi Palowa"
 }

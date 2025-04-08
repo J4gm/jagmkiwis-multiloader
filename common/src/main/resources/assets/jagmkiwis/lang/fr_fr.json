@@ -10,5 +10,10 @@
 	"jagmkiwis.subtitle.kiwi_death": "Kiwi qui meurt",
 	"jagmkiwis.subtitle.kiwi_lay_egg": "Kiwi pond un oeuf",
 	"jagmkiwis.subtitle.kiwi_dig": "Kiwi creusant",
-	"jagmkiwis.subtitle.laser_shoot": "Pew!"
+	"jagmkiwis.subtitle.laser_shoot": "Pew!",
+	"tag.item.c.eggs": "Oeufs",
+	"tag.item.c.fruits.kiwi": "Kiwis",
+	"tag.item.forge.eggs": "Oeufs",
+	"tag.item.forge.fruits.kiwi": "Kiwis",
+	"tag.item.jagmkiwis.pavlova_toppings": "Garniture de pavlova"
 }

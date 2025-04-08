@@ -16,7 +16,7 @@ public class KiwiModel extends EntityModel<KiwiRenderState> {
 	public static final ModelLayerLocation KIWI_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, "kiwi"), "main");
 	public static final ModelLayerLocation BABY_KIWI_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, "baby_kiwi"), "main");
 
-	public static final MeshTransformer BABY_TRANSFORMER = new BabyModelTransform(Set.of("head"));
+	public static final MeshTransformer BABY_TRANSFORMER = new BabyModelTransform(false, 2.0F, 0.5F, Set.of("head"));
 	private final ModelPart head;
 	private final ModelPart leftLeg;
 	private final ModelPart rightLeg;

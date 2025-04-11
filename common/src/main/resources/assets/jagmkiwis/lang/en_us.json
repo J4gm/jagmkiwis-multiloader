@@ -11,9 +11,8 @@
 	"jagmkiwis.subtitle.kiwi_lay_egg": "Kiwi plops",
 	"jagmkiwis.subtitle.kiwi_dig": "Kiwi forages",
 	"jagmkiwis.subtitle.laser_shoot": "Pew!",
-	"tag.item.c.eggs": "Eggs",
-	"tag.item.c.fruits.kiwi": "Kiwifruits",
-	"tag.item.forge.eggs": "Eggs",
-	"tag.item.forge.fruits.kiwi": "Kiwifruits",
+	"tag.item.c.drinks.milk": "Milk",
+	"tag.item.c.foods.fruit/kiwi": "Kiwifruits",
+	"tag.item.c.foods.fruits/kiwi": "Kiwifruits",
 	"tag.item.jagmkiwis.pavlova_toppings": "Pavlova Toppings"
 }

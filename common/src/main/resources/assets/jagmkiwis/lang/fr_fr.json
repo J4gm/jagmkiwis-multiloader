@@ -11,9 +11,8 @@
 	"jagmkiwis.subtitle.kiwi_lay_egg": "Kiwi pond un oeuf",
 	"jagmkiwis.subtitle.kiwi_dig": "Kiwi creusant",
 	"jagmkiwis.subtitle.laser_shoot": "Pew!",
-	"tag.item.c.eggs": "Oeufs",
-	"tag.item.c.fruits.kiwi": "Kiwis",
-	"tag.item.forge.eggs": "Oeufs",
-	"tag.item.forge.fruits.kiwi": "Kiwis",
+	"tag.item.c.drinks.milk": "Lait",
+	"tag.item.c.foods.fruit/kiwi": "Kiwis",
+	"tag.item.c.foods.fruits/kiwi": "Kiwis",
 	"tag.item.jagmkiwis.pavlova_toppings": "Garniture de pavlova"
 }

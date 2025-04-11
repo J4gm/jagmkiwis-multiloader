@@ -1,9 +1,9 @@
 {
   "values": [
     "minecraft:sweet_berries",
-    "#c:fruits/strawberry",
-    "#forge:fruits/strawberry",
-    "#c:fruits/raspberry",
-    "#forge:fruits/raspberry"
+    "#c:foods/fruits/strawberry",
+    "#c:foods/fruits/raspberry",
+    "#c:foods/fruit/strawberry",
+    "#c:foods/fruit/raspberry"
   ]
 }

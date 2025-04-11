@@ -2,9 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": "minecraft:milk_bucket",
+    "A": "#c:drinks/milk",
     "B": "minecraft:sugar",
-    "C": "minecraft:wheat",
+    "C": "#c:crops/wheat",
     "E": "#minecraft:eggs"
   },
   "pattern": [

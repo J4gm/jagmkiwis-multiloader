@@ -1,7 +1,7 @@
 {
   "type": "crafting_shapeless",
   "ingredients": [
-    "minecraft:pumpkin",
+    "#c:crops/pumpkin",
     "minecraft:sugar",
     "#minecraft:eggs"
   ],

@@ -1,6 +1,8 @@
 package jagm.jagmkiwis;
 
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -82,10 +84,27 @@ public class LaserBeamEntity extends AbstractArrow {
         this.discard();
     }
 
+    @Override
     public void tick() {
         super.tick();
         if(this.getDeltaMovement().length() < 1.0D) {
+            if(this.level().isClientSide){
+                this.makePoofParticles();
+            }
+            else {
+                this.playSound(SoundEvents.FIRE_EXTINGUISH);
+            }
             this.discard();
+        }
+    }
+
+    private void makePoofParticles() {
+        for(int i = 0; i < 10; ++i) {
+            double d = this.random.nextGaussian() * 0.02;
+            double e = this.random.nextGaussian() * 0.02;
+            double f = this.random.nextGaussian() * 0.02;
+            double g = 10.0;
+            this.level().addParticle(ParticleTypes.POOF, this.getRandomX(1.0) - d * g, this.getRandomY() - e * g, this.getRandomZ(1.0) - f * g, d, e, f);
         }
     }
 

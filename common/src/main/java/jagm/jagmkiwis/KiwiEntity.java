@@ -52,6 +52,7 @@ public class KiwiEntity extends Animal implements RangedAttackMob {
 	private KiwiDigGoal digGoal;
 	private int digAnimationTick;
 	public int eggTime = this.random.nextInt(12000) + 12000;
+	public boolean isKiwiJockey = false;
 
 	protected KiwiEntity(EntityType<? extends Animal> entityType, Level world) {
 		super(entityType, world);
@@ -81,7 +82,7 @@ public class KiwiEntity extends Animal implements RangedAttackMob {
 		if (this.level().isClientSide) {
 			this.digAnimationTick = Math.max(0, this.digAnimationTick - 1);
 		}
-		if (this.level() instanceof ServerLevel serverLevel && this.isAlive() && !this.isBaby() && --this.eggTime <= 0) {
+		if (this.level() instanceof ServerLevel serverLevel && this.isAlive() && !this.isBaby() && !this.isKiwiJockey && --this.eggTime <= 0) {
 			this.playSound(KiwiModSounds.KIWI_LAY_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 			this.spawnAtLocation(serverLevel, KiwiModItems.KIWI_EGG.get());
 			this.gameEvent(GameEvent.ENTITY_PLACE);
@@ -204,12 +205,18 @@ public class KiwiEntity extends Animal implements RangedAttackMob {
 	@Override
 	public void addAdditionalSaveData(CompoundTag compoundTag) {
 		super.addAdditionalSaveData(compoundTag);
+		compoundTag.putBoolean("IsKiwiJockey", this.isKiwiJockey);
+		compoundTag.putInt("EggLayTime", this.eggTime);
 		compoundTag.putInt("KiwiType", this.getVariant().id);
 	}
 
 	@Override
 	public void readAdditionalSaveData(CompoundTag compoundTag) {
 		super.readAdditionalSaveData(compoundTag);
+		this.isKiwiJockey = compoundTag.getBooleanOr("IsKiwiJockey", false);
+		compoundTag.getInt("EggLayTime").ifPresent((eggTime) -> {
+			this.eggTime = eggTime;
+		});
 		Optional<Integer> id = compoundTag.getInt("KiwiType");
 		this.setVariant(id.isPresent() ? Variant.byId(id.get()) : Variant.NORMAL);
 	}
@@ -238,6 +245,25 @@ public class KiwiEntity extends Animal implements RangedAttackMob {
 	@Override
 	public EntityDimensions getDefaultDimensions(Pose pose) {
 		return this.isBaby() ? BABY_DIMENSIONS : super.getDefaultDimensions(pose);
+	}
+
+	@Override
+	protected Vec3 getPassengerAttachmentPoint(Entity passenger, EntityDimensions size, float partialTicks){
+		Vec3 offset = new Vec3(0.0D, 0.0D, -0.1875D);
+		return super.getPassengerAttachmentPoint(passenger, size, partialTicks).add(offset.yRot(-this.yBodyRot * (float) Math.PI / 180F));
+	}
+
+	@Override
+	protected void positionRider(Entity passenger, Entity.MoveFunction moveFunction){
+		super.positionRider(passenger, moveFunction);
+		if(passenger instanceof LivingEntity livingPassenger){
+			livingPassenger.yBodyRot = this.yBodyRot;
+		}
+	}
+
+	@Override
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return this.isKiwiJockey;
 	}
 
 	public enum Variant implements StringRepresentable {

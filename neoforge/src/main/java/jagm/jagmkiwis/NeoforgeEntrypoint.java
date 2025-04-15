@@ -6,6 +6,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.api.distmarker.Dist;
@@ -18,6 +19,7 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
+import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 @Mod(KiwiMod.MOD_ID)
@@ -61,6 +63,13 @@ public class NeoforgeEntrypoint {
         public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
             if(event.getEntity() instanceof Cat cat){
                 KiwiModEntities.addCatGoal(cat, cat.targetSelector);
+            }
+        }
+
+        @SubscribeEvent
+        public static void finalizeSpawnEvent(FinalizeSpawnEvent event){
+            if(event.getEntity() instanceof Zombie zombie){
+                event.setSpawnData(KiwiModEntities.finalizeZombieSpawn(zombie, event.getLevel(), event.getSpawnData(), event.getDifficulty()));
             }
         }
 

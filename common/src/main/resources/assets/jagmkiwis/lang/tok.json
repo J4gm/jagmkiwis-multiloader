@@ -1,10 +1,11 @@
 {
 	"entity.jagmkiwis.kiwi": "waso kili",
 	"entity.jagmkiwis.laser_beam": "linja suno",
+	"entity.jagmkiwis.kiwi_egg": "sike mama pi waso kili",
 	"item.jagmkiwis.kiwi_spawn_egg": "sike mama pi waso kili",
 	"item.jagmkiwis.kiwi_fruit": "kili waso",
 	"item.jagmkiwis.kiwi_egg": "sike mama pi waso kili",
-	"item.jagmkiwis.pavlova": "pan suwi Palowa",
+	"item.jagmkiwis.pavlova": "suwi Palowa",
 	"jagmkiwis.subtitle.kiwi_ambient": "waso kili li mu",
 	"jagmkiwis.subtitle.kiwi_hurt": "waso kili li pakala",
 	"jagmkiwis.subtitle.kiwi_death": "waso kili li moli",
@@ -14,5 +15,5 @@
 	"tag.item.c.drinks.milk": "telo walo",
 	"tag.item.c.foods.fruit/kiwi": "kili waso",
 	"tag.item.c.foods.fruits/kiwi": "kili waso",
-	"tag.item.jagmkiwis.pavlova_toppings": "kili pi pan suwi Palowa"
+	"tag.item.jagmkiwis.pavlova_toppings": "kili pi suwi Palowa"
 }

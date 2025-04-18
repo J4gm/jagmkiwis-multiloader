@@ -20,6 +20,7 @@ public class KiwiModEntities {
 
     public static final String KIWI_NAME = "kiwi";
     public static final String LASER_BEAM_NAME = "laser_beam";
+    public static final String KIWI_EGG_NAME = "kiwi_egg";
 
     public static final float KIWI_JOCKEY_CHANCE = 0.05F;
 
@@ -35,6 +36,13 @@ public class KiwiModEntities {
             .updateInterval(20)
             .sized(0.5F, 0.5F)
             .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, LASER_BEAM_NAME)))
+    );
+    public static final Supplier<EntityType<KiwiEggEntity>> KIWI_EGG = Suppliers.memoize(() -> EntityType.Builder
+            .of((EntityType.EntityFactory<KiwiEggEntity>)KiwiEggEntity::new, MobCategory.MISC)
+            .noLootTable()
+            .updateInterval(20)
+            .sized(0.25F, 0.25F)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, KIWI_EGG_NAME)))
     );
 
     public static void addCatGoal(Cat cat, GoalSelector targetSelector){

@@ -6,6 +6,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Items;
 
@@ -16,6 +17,7 @@ public class FabricClient implements ClientModInitializer {
     public void onInitializeClient() {
         EntityRendererRegistry.register(KiwiModEntities.KIWI.get(), KiwiRenderer::new);
         EntityRendererRegistry.register(KiwiModEntities.LASER_BEAM.get(), LaserBeamRenderer::new);
+        EntityRendererRegistry.register(KiwiModEntities.KIWI_EGG.get(), ThrownItemRenderer::new);
         EntityModelLayerRegistry.registerModelLayer(KiwiModel.KIWI_LAYER, KiwiModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(KiwiModel.BABY_KIWI_LAYER, () -> KiwiModel.createBodyLayer().apply(KiwiModel.BABY_TRANSFORMER));
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(content -> {

@@ -1,5 +1,6 @@
 package jagm.jagmkiwis;
 
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
@@ -34,6 +35,7 @@ public class NeoforgeEntrypoint {
         KiwiModItems.ITEMS_COMMON.forEach(ITEMS_NEOFORGE::register);
         ENTITIES_NEOFORGE.register(KiwiModEntities.KIWI_NAME, KiwiModEntities.KIWI);
         ENTITIES_NEOFORGE.register(KiwiModEntities.LASER_BEAM_NAME, KiwiModEntities.LASER_BEAM);
+        ENTITIES_NEOFORGE.register(KiwiModEntities.KIWI_EGG_NAME, KiwiModEntities.KIWI_EGG);
         KiwiModSounds.SOUNDS_COMMON.forEach(SOUNDS_NEOFORGE::register);
         ITEMS_NEOFORGE.register(eventBus);
         ENTITIES_NEOFORGE.register(eventBus);
@@ -67,7 +69,7 @@ public class NeoforgeEntrypoint {
         }
 
         @SubscribeEvent
-        public static void finalizeSpawnEvent(FinalizeSpawnEvent event){
+        public static void onFinalizeSpawn(FinalizeSpawnEvent event){
             if(event.getEntity() instanceof Zombie zombie){
                 event.setSpawnData(KiwiModEntities.finalizeZombieSpawn(zombie, event.getLevel(), event.getSpawnData(), event.getDifficulty()));
             }
@@ -82,6 +84,7 @@ public class NeoforgeEntrypoint {
         public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(KiwiModEntities.KIWI.get(), KiwiRenderer::new);
             event.registerEntityRenderer(KiwiModEntities.LASER_BEAM.get(), LaserBeamRenderer::new);
+            event.registerEntityRenderer(KiwiModEntities.KIWI_EGG.get(), ThrownItemRenderer::new);
         }
 
         @SubscribeEvent

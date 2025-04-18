@@ -20,7 +20,6 @@ public class FabricEntrypoint implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        KiwiMod.init();
         KiwiModItems.ITEMS_COMMON.forEach((name, itemSupplier) -> Registry.register(BuiltInRegistries.ITEM, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, name), itemSupplier.get()));
         Registry.register(BuiltInRegistries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, KiwiModEntities.KIWI_NAME), KiwiModEntities.KIWI.get());
         Registry.register(BuiltInRegistries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, KiwiModEntities.LASER_BEAM_NAME), KiwiModEntities.LASER_BEAM.get());
@@ -34,6 +33,7 @@ public class FabricEntrypoint implements ModInitializer {
                 KiwiModEntities.addCatGoal(cat, cat.targetSelector);
             }
         });
+        KiwiMod.addDispenserBehaviour();
     }
 
 }

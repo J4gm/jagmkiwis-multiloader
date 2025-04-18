@@ -20,6 +20,7 @@ import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -32,7 +33,6 @@ public class ForgeEntrypoint {
     static final DeferredRegister<SoundEvent> SOUNDS_FORGE = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, KiwiMod.MOD_ID);
 
     public ForgeEntrypoint(FMLJavaModLoadingContext context) {
-        KiwiMod.init();
         IEventBus eventBus = context.getModEventBus();
         KiwiModItems.ITEMS_COMMON.forEach(ITEMS_FORGE::register);
         ENTITIES_FORGE.register(KiwiModEntities.KIWI_NAME, KiwiModEntities.KIWI);
@@ -56,6 +56,11 @@ public class ForgeEntrypoint {
         public static void onRegisterSpawnPlacements(SpawnPlacementRegisterEvent event) {
             event.register(KiwiModEntities.KIWI.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
                     SpawnPlacementRegisterEvent.Operation.REPLACE);
+        }
+
+        @SubscribeEvent
+        public static void onCommonSetup(FMLCommonSetupEvent event){
+            KiwiMod.addDispenserBehaviour();
         }
 
     }

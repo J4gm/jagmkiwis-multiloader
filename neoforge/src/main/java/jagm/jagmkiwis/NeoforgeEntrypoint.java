@@ -15,6 +15,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
@@ -31,7 +32,6 @@ public class NeoforgeEntrypoint {
     static final DeferredRegister<SoundEvent> SOUNDS_NEOFORGE = DeferredRegister.create(Registries.SOUND_EVENT, KiwiMod.MOD_ID);
 
     public NeoforgeEntrypoint(IEventBus eventBus) {
-        KiwiMod.init();
         KiwiModItems.ITEMS_COMMON.forEach(ITEMS_NEOFORGE::register);
         ENTITIES_NEOFORGE.register(KiwiModEntities.KIWI_NAME, KiwiModEntities.KIWI);
         ENTITIES_NEOFORGE.register(KiwiModEntities.LASER_BEAM_NAME, KiwiModEntities.LASER_BEAM);
@@ -54,6 +54,11 @@ public class NeoforgeEntrypoint {
         public static void onRegisterSpawnPlacements(RegisterSpawnPlacementsEvent event) {
             event.register(KiwiModEntities.KIWI.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
                     RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        }
+
+        @SubscribeEvent
+        public static void onCommonSetup(FMLCommonSetupEvent event) {
+            KiwiMod.addDispenserBehaviour();
         }
 
     }

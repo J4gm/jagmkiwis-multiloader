@@ -4,7 +4,6 @@ import java.util.Optional;
 import java.util.function.IntFunction;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -41,6 +40,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 
 public class KiwiEntity extends Animal implements RangedAttackMob {
@@ -203,21 +204,21 @@ public class KiwiEntity extends Animal implements RangedAttackMob {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag compoundTag) {
-		super.addAdditionalSaveData(compoundTag);
-		compoundTag.putBoolean("IsKiwiJockey", this.isKiwiJockey);
-		compoundTag.putInt("EggLayTime", this.eggTime);
-		compoundTag.putInt("KiwiType", this.getVariant().id);
+	public void addAdditionalSaveData(ValueOutput valueOutput) {
+		super.addAdditionalSaveData(valueOutput);
+		valueOutput.putBoolean("IsKiwiJockey", this.isKiwiJockey);
+		valueOutput.putInt("EggLayTime", this.eggTime);
+		valueOutput.putInt("KiwiType", this.getVariant().id);
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundTag compoundTag) {
-		super.readAdditionalSaveData(compoundTag);
-		this.isKiwiJockey = compoundTag.getBooleanOr("IsKiwiJockey", false);
-		compoundTag.getInt("EggLayTime").ifPresent((eggTime) -> {
+	public void readAdditionalSaveData(ValueInput valueInput) {
+		super.readAdditionalSaveData(valueInput);
+		this.isKiwiJockey = valueInput.getBooleanOr("IsKiwiJockey", false);
+		valueInput.getInt("EggLayTime").ifPresent((eggTime) -> {
 			this.eggTime = eggTime;
 		});
-		Optional<Integer> id = compoundTag.getInt("KiwiType");
+		Optional<Integer> id = valueInput.getInt("KiwiType");
 		this.setVariant(id.isPresent() ? Variant.byId(id.get()) : Variant.NORMAL);
 	}
 

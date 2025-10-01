@@ -48,7 +48,7 @@ public class KiwiEntity extends Animal implements RangedAttackMob {
 
 	private static final EntityDataAccessor<Integer> DATA_TYPE_ID = SynchedEntityData.defineId(KiwiEntity.class, EntityDataSerializers.INT);
 	private static final int CHANCE_OF_LASERS = 5;
-	private static final EntityDimensions BABY_DIMENSIONS = KiwiModEntities.KIWI.get().getDimensions().scale(0.75F).withEyeHeight(0.25F);
+	private static final EntityDimensions BABY_DIMENSIONS = KiwiModEntities.KIWI.getDimensions().scale(0.75F).withEyeHeight(0.25F);
 
 	private KiwiDigGoal digGoal;
 	private int digAnimationTick;
@@ -80,12 +80,12 @@ public class KiwiEntity extends Animal implements RangedAttackMob {
 
 	@Override
 	public void aiStep() {
-		if (this.level().isClientSide) {
+		if (this.level().isClientSide()) {
 			this.digAnimationTick = Math.max(0, this.digAnimationTick - 1);
 		}
 		if (this.level() instanceof ServerLevel serverLevel && this.isAlive() && !this.isBaby() && !this.isKiwiJockey && --this.eggTime <= 0) {
-			this.playSound(KiwiModSounds.KIWI_LAY_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-			this.spawnAtLocation(serverLevel, KiwiModItems.KIWI_EGG.get());
+			this.playSound(KiwiModSounds.KIWI_LAY_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+			this.spawnAtLocation(serverLevel, KiwiModItems.KIWI_EGG);
 			this.gameEvent(GameEvent.ENTITY_PLACE);
 			this.eggTime = this.random.nextInt(12000) + 12000;
 		}
@@ -127,7 +127,7 @@ public class KiwiEntity extends Animal implements RangedAttackMob {
 
 	@Override
 	public KiwiEntity getBreedOffspring(ServerLevel world, AgeableMob kiwi) {
-		KiwiEntity babyKiwi = KiwiModEntities.KIWI.get().create(world, EntitySpawnReason.BREEDING);
+		KiwiEntity babyKiwi = KiwiModEntities.KIWI.create(world, EntitySpawnReason.BREEDING);
 		boolean isLaserVariant = this.getRandom().nextInt(100) < CHANCE_OF_LASERS;
         if (babyKiwi != null) {
 			babyKiwi.setVariant(isLaserVariant ? Variant.LASER : Variant.NORMAL);
@@ -145,7 +145,7 @@ public class KiwiEntity extends Animal implements RangedAttackMob {
 
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return KiwiModSounds.KIWI_AMBIENT.get();
+		return KiwiModSounds.KIWI_AMBIENT;
 	}
 
 	@Override
@@ -157,12 +157,12 @@ public class KiwiEntity extends Animal implements RangedAttackMob {
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSource) {
-		return KiwiModSounds.KIWI_HURT.get();
+		return KiwiModSounds.KIWI_HURT;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return KiwiModSounds.KIWI_DEATH.get();
+		return KiwiModSounds.KIWI_DEATH;
 	}
 
 	@Override
@@ -239,7 +239,7 @@ public class KiwiEntity extends Animal implements RangedAttackMob {
 		laser.shoot(d0, d1, d2, 1.5F, 0.0F);
 		this.level().addFreshEntity(laser);
 		if(!this.isSilent()) {
-			this.playSound(KiwiModSounds.LASER_SHOOT.get());
+			this.playSound(KiwiModSounds.LASER_SHOOT);
 		}
 	}
 

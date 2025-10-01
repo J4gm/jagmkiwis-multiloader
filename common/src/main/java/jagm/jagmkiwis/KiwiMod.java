@@ -7,7 +7,7 @@ public class KiwiMod {
     public static final String MOD_ID = "jagmkiwis";
 
     public static void addDispenserBehaviour() {
-        DispenserBlock.registerProjectileBehavior(KiwiModItems.KIWI_EGG.get());
+        DispenserBlock.registerProjectileBehavior(KiwiModItems.KIWI_EGG);
     }
 
 }

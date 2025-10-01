@@ -21,11 +21,11 @@ public class KiwiEggEntity extends ThrowableItemProjectile {
     }
 
     public KiwiEggEntity(Level level, LivingEntity owner, ItemStack stack) {
-        super(KiwiModEntities.KIWI_EGG.get(), owner, level, stack);
+        super(KiwiModEntities.KIWI_EGG, owner, level, stack);
     }
 
     public KiwiEggEntity(Level level, double x, double y, double z, ItemStack item) {
-        super(KiwiModEntities.KIWI_EGG.get(), x, y, z, level, item);
+        super(KiwiModEntities.KIWI_EGG, x, y, z, level, item);
     }
 
     @Override
@@ -48,14 +48,14 @@ public class KiwiEggEntity extends ThrowableItemProjectile {
     @Override
     protected void onHit(HitResult result) {
         super.onHit(result);
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             if (this.random.nextInt(8) == 0) {
                 int i = 1;
                 if (this.random.nextInt(32) == 0) {
                     i = 4;
                 }
                 for(int j = 0; j < i; ++j) {
-                    KiwiEntity kiwi = KiwiModEntities.KIWI.get().create(this.level(), EntitySpawnReason.TRIGGERED);
+                    KiwiEntity kiwi = KiwiModEntities.KIWI.create(this.level(), EntitySpawnReason.TRIGGERED);
                     if (kiwi != null) {
                         kiwi.setAge(-24000);
                         kiwi.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
@@ -73,7 +73,7 @@ public class KiwiEggEntity extends ThrowableItemProjectile {
 
     @Override
     protected Item getDefaultItem() {
-        return KiwiModItems.KIWI_EGG.get();
+        return KiwiModItems.KIWI_EGG;
     }
 
 }

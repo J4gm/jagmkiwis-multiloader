@@ -2,8 +2,7 @@ package jagm.jagmkiwis;
 
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Cat;
@@ -22,37 +21,35 @@ import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.RegisterEvent;
 
 @Mod(KiwiMod.MOD_ID)
 public class NeoforgeEntrypoint {
 
-    static final DeferredRegister.Items ITEMS_NEOFORGE = DeferredRegister.createItems(KiwiMod.MOD_ID);
-    static final DeferredRegister<EntityType<?>> ENTITIES_NEOFORGE = DeferredRegister.create(Registries.ENTITY_TYPE, KiwiMod.MOD_ID);
-    static final DeferredRegister<SoundEvent> SOUNDS_NEOFORGE = DeferredRegister.create(Registries.SOUND_EVENT, KiwiMod.MOD_ID);
-
     public NeoforgeEntrypoint(IEventBus eventBus) {
-        KiwiModItems.ITEMS_COMMON.forEach(ITEMS_NEOFORGE::register);
-        ENTITIES_NEOFORGE.register(KiwiModEntities.KIWI_NAME, KiwiModEntities.KIWI);
-        ENTITIES_NEOFORGE.register(KiwiModEntities.LASER_BEAM_NAME, KiwiModEntities.LASER_BEAM);
-        ENTITIES_NEOFORGE.register(KiwiModEntities.KIWI_EGG_NAME, KiwiModEntities.KIWI_EGG);
-        KiwiModSounds.SOUNDS_COMMON.forEach(SOUNDS_NEOFORGE::register);
-        ITEMS_NEOFORGE.register(eventBus);
-        ENTITIES_NEOFORGE.register(eventBus);
-        SOUNDS_NEOFORGE.register(eventBus);
+
     }
 
-    @EventBusSubscriber(modid = KiwiMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+    @EventBusSubscriber(modid = KiwiMod.MOD_ID)
     public static class CommonModEventHandler{
 
         @SubscribeEvent
+        public static void onRegister(RegisterEvent event) {
+            event.register(Registries.ITEM, helper -> KiwiModItems.ITEMS_COMMON.forEach((name, item) -> helper.register(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, name), item)));
+            event.register(Registries.SOUND_EVENT, helper -> KiwiModSounds.SOUNDS_COMMON.forEach((name, soundEvent) -> helper.register(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, name), soundEvent)));
+            event.register(Registries.ENTITY_TYPE, helper -> helper.register(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, KiwiModEntities.KIWI_NAME), KiwiModEntities.KIWI));
+            event.register(Registries.ENTITY_TYPE, helper -> helper.register(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, KiwiModEntities.LASER_BEAM_NAME), KiwiModEntities.LASER_BEAM));
+            event.register(Registries.ENTITY_TYPE, helper -> helper.register(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, KiwiModEntities.KIWI_EGG_NAME), KiwiModEntities.KIWI_EGG));
+        }
+
+        @SubscribeEvent
         public static void createDefaultAttributes(EntityAttributeCreationEvent event) {
-            event.put(KiwiModEntities.KIWI.get(), KiwiEntity.createAttributes().build());
+            event.put(KiwiModEntities.KIWI, KiwiEntity.createAttributes().build());
         }
 
         @SubscribeEvent
         public static void onRegisterSpawnPlacements(RegisterSpawnPlacementsEvent event) {
-            event.register(KiwiModEntities.KIWI.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
+            event.register(KiwiModEntities.KIWI, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
                     RegisterSpawnPlacementsEvent.Operation.REPLACE);
         }
 
@@ -63,7 +60,7 @@ public class NeoforgeEntrypoint {
 
     }
 
-    @EventBusSubscriber(modid = KiwiMod.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
+    @EventBusSubscriber(modid = KiwiMod.MOD_ID)
     public static class CommonGameEventHandler{
 
         @SubscribeEvent
@@ -82,14 +79,14 @@ public class NeoforgeEntrypoint {
 
     }
 
-    @EventBusSubscriber(modid = KiwiMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = KiwiMod.MOD_ID, value = Dist.CLIENT)
     public static class ClientModEventHandler{
 
         @SubscribeEvent
         public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-            event.registerEntityRenderer(KiwiModEntities.KIWI.get(), KiwiRenderer::new);
-            event.registerEntityRenderer(KiwiModEntities.LASER_BEAM.get(), LaserBeamRenderer::new);
-            event.registerEntityRenderer(KiwiModEntities.KIWI_EGG.get(), ThrownItemRenderer::new);
+            event.registerEntityRenderer(KiwiModEntities.KIWI, KiwiRenderer::new);
+            event.registerEntityRenderer(KiwiModEntities.LASER_BEAM, LaserBeamRenderer::new);
+            event.registerEntityRenderer(KiwiModEntities.KIWI_EGG, ThrownItemRenderer::new);
         }
 
         @SubscribeEvent
@@ -101,17 +98,17 @@ public class NeoforgeEntrypoint {
         @SubscribeEvent
         public static void onFillCreativeTabs(BuildCreativeModeTabContentsEvent event){
             if(event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS){
-                event.accept(KiwiModItems.KIWI_FRUIT.get());
-                event.accept(KiwiModItems.PAVLOVA.get());
+                event.accept(KiwiModItems.KIWI_FRUIT);
+                event.accept(KiwiModItems.PAVLOVA);
             }
             else if(event.getTabKey() == CreativeModeTabs.SPAWN_EGGS){
-                event.accept(KiwiModItems.KIWI_SPAWN_EGG.get());
+                event.accept(KiwiModItems.KIWI_SPAWN_EGG);
             }
             else if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
-                event.accept(KiwiModItems.KIWI_EGG.get());
+                event.accept(KiwiModItems.KIWI_EGG);
             }
             else if(event.getTabKey() == CreativeModeTabs.COMBAT){
-                event.accept(KiwiModItems.KIWI_EGG.get());
+                event.accept(KiwiModItems.KIWI_EGG);
             }
         }
 

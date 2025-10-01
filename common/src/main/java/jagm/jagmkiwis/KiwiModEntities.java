@@ -1,7 +1,5 @@
 package jagm.jagmkiwis;
 
-import com.google.common.base.Supplier;
-import com.google.common.base.Suppliers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -24,26 +22,23 @@ public class KiwiModEntities {
 
     public static final float KIWI_JOCKEY_CHANCE = 0.05F;
 
-    public static final Supplier<EntityType<KiwiEntity>> KIWI = Suppliers.memoize(() -> EntityType.Builder
+    public static final EntityType<KiwiEntity> KIWI = EntityType.Builder
             .of(KiwiEntity::new, MobCategory.CREATURE)
             .clientTrackingRange(8)
             .sized(0.5F, 0.5F)
-            .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, KIWI_NAME)))
-    );
-    public static final Supplier<EntityType<LaserBeamEntity>> LASER_BEAM = Suppliers.memoize(() -> EntityType.Builder
+            .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, KIWI_NAME)));
+    public static final EntityType<LaserBeamEntity> LASER_BEAM = EntityType.Builder
             .of((EntityType.EntityFactory<LaserBeamEntity>)LaserBeamEntity::new, MobCategory.MISC)
             .noLootTable()
             .updateInterval(20)
             .sized(0.5F, 0.5F)
-            .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, LASER_BEAM_NAME)))
-    );
-    public static final Supplier<EntityType<KiwiEggEntity>> KIWI_EGG = Suppliers.memoize(() -> EntityType.Builder
+            .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, LASER_BEAM_NAME)));
+    public static final EntityType<KiwiEggEntity> KIWI_EGG = EntityType.Builder
             .of((EntityType.EntityFactory<KiwiEggEntity>)KiwiEggEntity::new, MobCategory.MISC)
             .noLootTable()
             .updateInterval(20)
             .sized(0.25F, 0.25F)
-            .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, KIWI_EGG_NAME)))
-    );
+            .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, KIWI_EGG_NAME)));
 
     public static void addCatGoal(Cat cat, GoalSelector targetSelector){
         targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(cat, KiwiEntity.class, true));
@@ -65,7 +60,7 @@ public class KiwiModEntities {
                         return new Zombie.ZombieGroupData(true, false);
                     }
                 } else if (random.nextFloat() < KIWI_JOCKEY_CHANCE) {
-                    KiwiEntity kiwi = KIWI.get().create(zombie.level(), EntitySpawnReason.JOCKEY);
+                    KiwiEntity kiwi = KIWI.create(zombie.level(), EntitySpawnReason.JOCKEY);
                     if (kiwi != null) {
                         kiwi.snapTo(zombie.getX(), zombie.getY(), zombie.getZ(), zombie.getYRot(), 0.0F);
                         kiwi.finalizeSpawn(level, difficulty, EntitySpawnReason.JOCKEY, null);

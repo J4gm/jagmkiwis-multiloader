@@ -58,7 +58,7 @@ public class KiwiDigGoal extends Goal {
 		if (this.digAnimationTick == this.adjustedTickDelay(4)) {
 			Level level = this.mob.level();
 			if (level.getServer() != null && level instanceof ServerLevel serverLevel && this.mob.isAlive()) {
-				this.mob.playSound(KiwiModSounds.KIWI_DIG.get(), 1.0F, (this.mob.getRandom().nextFloat() - this.mob.getRandom().nextFloat()) * 0.2F + 1.0F);
+				this.mob.playSound(KiwiModSounds.KIWI_DIG, 1.0F, (this.mob.getRandom().nextFloat() - this.mob.getRandom().nextFloat()) * 0.2F + 1.0F);
 				LootTable diggingLoot = serverLevel.getServer().reloadableRegistries().getLootTable(DIGGING_LOOT);
 				LootParams.Builder lootParams$builder = new LootParams.Builder(serverLevel);
 				LootParams lootParams = lootParams$builder.create(LootContextParamSets.EMPTY);

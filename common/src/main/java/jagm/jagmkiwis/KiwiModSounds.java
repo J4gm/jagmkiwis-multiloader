@@ -9,19 +9,19 @@ import java.util.HashMap;
 
 public class KiwiModSounds {
 
-    public static final HashMap<String, Supplier<SoundEvent>> SOUNDS_COMMON = new HashMap<>();
+    public static final HashMap<String, SoundEvent> SOUNDS_COMMON = new HashMap<>();
 
-    public static final Supplier<SoundEvent> KIWI_AMBIENT = createSoundEventSupplier("kiwi_ambient");
-    public static final Supplier<SoundEvent> KIWI_HURT = createSoundEventSupplier("kiwi_hurt");
-    public static final Supplier<SoundEvent> KIWI_DEATH = createSoundEventSupplier("kiwi_death");
-    public static final Supplier<SoundEvent> KIWI_DIG = createSoundEventSupplier("kiwi_dig");
-    public static final Supplier<SoundEvent> KIWI_LAY_EGG = createSoundEventSupplier("kiwi_lay_egg");
-    public static final Supplier<SoundEvent> LASER_SHOOT = createSoundEventSupplier("laser_shoot");
+    public static final SoundEvent KIWI_AMBIENT = createSoundEvent("kiwi_ambient");
+    public static final SoundEvent KIWI_HURT = createSoundEvent("kiwi_hurt");
+    public static final SoundEvent KIWI_DEATH = createSoundEvent("kiwi_death");
+    public static final SoundEvent KIWI_DIG = createSoundEvent("kiwi_dig");
+    public static final SoundEvent KIWI_LAY_EGG = createSoundEvent("kiwi_lay_egg");
+    public static final SoundEvent LASER_SHOOT = createSoundEvent("laser_shoot");
 
-    private static Supplier<SoundEvent> createSoundEventSupplier (String name) {
-        Supplier<SoundEvent> soundEventSupplier = Suppliers.memoize(() -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, name)));
-        SOUNDS_COMMON.put(name, soundEventSupplier);
-        return soundEventSupplier;
+    private static SoundEvent createSoundEvent (String name) {
+        SoundEvent soundEvent = SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, name));
+        SOUNDS_COMMON.put(name, soundEvent);
+        return soundEvent;
     }
 
 }

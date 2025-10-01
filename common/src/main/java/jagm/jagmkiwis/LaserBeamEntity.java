@@ -24,7 +24,7 @@ public class LaserBeamEntity extends AbstractArrow {
     }
 
     protected LaserBeamEntity(Level level, LivingEntity shooter) {
-        super(KiwiModEntities.LASER_BEAM.get(), level);
+        super(KiwiModEntities.LASER_BEAM, level);
         this.setOwner(shooter);
     }
 
@@ -88,7 +88,7 @@ public class LaserBeamEntity extends AbstractArrow {
     public void tick() {
         super.tick();
         if(this.getDeltaMovement().length() < 1.0D) {
-            if(this.level().isClientSide){
+            if(this.level().isClientSide()){
                 this.makePoofParticles();
             }
             else {

@@ -1,12 +1,12 @@
 package jagm.jagmkiwis;
 
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class KiwiRenderState extends LivingEntityRenderState {
 
     public float headEatPositionScale;
     public float headEatAngleScale;
-    public ResourceLocation texture;
+    public Identifier texture;
 
 }

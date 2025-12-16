@@ -4,7 +4,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.Item;
@@ -40,7 +40,7 @@ public class KiwiModItems {
     );
 
     private static Item createItem (String name, Function<Item.Properties, Item> factory, Item.Properties props){
-        Item item = factory.apply(props.setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, name))));
+        Item item = factory.apply(props.setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(KiwiMod.MOD_ID, name))));
         ITEMS_COMMON.put(name, item);
         return item;
     }

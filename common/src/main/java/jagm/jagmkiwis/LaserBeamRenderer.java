@@ -3,11 +3,11 @@ package jagm.jagmkiwis;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.state.ArrowRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class LaserBeamRenderer extends ArrowRenderer<LaserBeamEntity, ArrowRenderState>{
 
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, "textures/entity/laser_beam.png");
+    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(KiwiMod.MOD_ID, "textures/entity/laser_beam.png");
 
     public LaserBeamRenderer(Context context) {
         super(context);
@@ -19,7 +19,7 @@ public class LaserBeamRenderer extends ArrowRenderer<LaserBeamEntity, ArrowRende
     }
 
     @Override
-    protected ResourceLocation getTextureLocation(ArrowRenderState arrowRenderState) {
+    protected Identifier getTextureLocation(ArrowRenderState arrowRenderState) {
         return TEXTURE;
     }
 

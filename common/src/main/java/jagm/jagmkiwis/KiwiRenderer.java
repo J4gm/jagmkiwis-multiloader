@@ -2,12 +2,12 @@ package jagm.jagmkiwis;
 
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class KiwiRenderer extends AgeableMobRenderer<KiwiEntity, KiwiRenderState, KiwiModel> {
 
-	private static final ResourceLocation NORMAL_KIWI = ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, "textures/entity/kiwi.png");
-	private static final ResourceLocation LASER_KIWI = ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, "textures/entity/laser_kiwi.png");
+	private static final Identifier NORMAL_KIWI = Identifier.fromNamespaceAndPath(KiwiMod.MOD_ID, "textures/entity/kiwi.png");
+	private static final Identifier LASER_KIWI = Identifier.fromNamespaceAndPath(KiwiMod.MOD_ID, "textures/entity/laser_kiwi.png");
 
 	public KiwiRenderer(Context context) {
 		super(context, new KiwiModel(context.bakeLayer(KiwiModel.KIWI_LAYER)), new KiwiModel(context.bakeLayer(KiwiModel.BABY_KIWI_LAYER)), 0.3F);
@@ -19,7 +19,7 @@ public class KiwiRenderer extends AgeableMobRenderer<KiwiEntity, KiwiRenderState
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(KiwiRenderState renderState) {
+	public Identifier getTextureLocation(KiwiRenderState renderState) {
 		return renderState.texture;
 	}
 

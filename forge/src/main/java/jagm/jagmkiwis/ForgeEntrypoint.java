@@ -1,11 +1,11 @@
 package jagm.jagmkiwis;
 
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Cat;
-import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.animal.feline.Cat;
+import net.minecraft.world.entity.monster.zombie.Zombie;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
@@ -34,12 +34,12 @@ public class ForgeEntrypoint {
 
         @SubscribeEvent
         public static void registerEvent(RegisterEvent event) {
-            event.register(ForgeRegistries.Keys.ITEMS, helper -> KiwiModItems.ITEMS_COMMON.forEach((name, item) -> helper.register(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, name), item)));
-            event.register(ForgeRegistries.Keys.SOUND_EVENTS, helper -> KiwiModSounds.SOUNDS_COMMON.forEach((name, soundEvent) -> helper.register(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, name), soundEvent)));
+            event.register(ForgeRegistries.Keys.ITEMS, helper -> KiwiModItems.ITEMS_COMMON.forEach((name, item) -> helper.register(Identifier.fromNamespaceAndPath(KiwiMod.MOD_ID, name), item)));
+            event.register(ForgeRegistries.Keys.SOUND_EVENTS, helper -> KiwiModSounds.SOUNDS_COMMON.forEach((name, soundEvent) -> helper.register(Identifier.fromNamespaceAndPath(KiwiMod.MOD_ID, name), soundEvent)));
             event.register(ForgeRegistries.Keys.ENTITY_TYPES, helper -> {
-                helper.register(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, KiwiModEntities.KIWI_NAME), KiwiModEntities.KIWI);
-                helper.register(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, KiwiModEntities.LASER_BEAM_NAME), KiwiModEntities.LASER_BEAM);
-                helper.register(ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, KiwiModEntities.KIWI_EGG_NAME), KiwiModEntities.KIWI_EGG);
+                helper.register(Identifier.fromNamespaceAndPath(KiwiMod.MOD_ID, KiwiModEntities.KIWI_NAME), KiwiModEntities.KIWI);
+                helper.register(Identifier.fromNamespaceAndPath(KiwiMod.MOD_ID, KiwiModEntities.LASER_BEAM_NAME), KiwiModEntities.LASER_BEAM);
+                helper.register(Identifier.fromNamespaceAndPath(KiwiMod.MOD_ID, KiwiModEntities.KIWI_EGG_NAME), KiwiModEntities.KIWI_EGG);
             });
         }
 

@@ -4,7 +4,7 @@ import java.util.EnumSet;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Mob;
@@ -18,7 +18,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 public class KiwiDigGoal extends Goal {
 
 	private final Mob mob;
-	public static final ResourceKey<LootTable> DIGGING_LOOT = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, "entities/kiwi_diggables"));
+	public static final ResourceKey<LootTable> DIGGING_LOOT = ResourceKey.create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(KiwiMod.MOD_ID, "entities/kiwi_diggables"));
 	private int digAnimationTick;
 
 	public KiwiDigGoal(Mob mob) {

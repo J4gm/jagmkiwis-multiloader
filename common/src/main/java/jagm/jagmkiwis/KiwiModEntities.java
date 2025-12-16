@@ -2,14 +2,14 @@ package jagm.jagmkiwis;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.GoalSelector;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.Cat;
-import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.animal.feline.Cat;
+import net.minecraft.world.entity.monster.zombie.Zombie;
 import net.minecraft.world.level.ServerLevelAccessor;
 
 import java.util.List;
@@ -26,19 +26,19 @@ public class KiwiModEntities {
             .of(KiwiEntity::new, MobCategory.CREATURE)
             .clientTrackingRange(8)
             .sized(0.5F, 0.5F)
-            .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, KIWI_NAME)));
+            .build(ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(KiwiMod.MOD_ID, KIWI_NAME)));
     public static final EntityType<LaserBeamEntity> LASER_BEAM = EntityType.Builder
             .of((EntityType.EntityFactory<LaserBeamEntity>)LaserBeamEntity::new, MobCategory.MISC)
             .noLootTable()
             .updateInterval(20)
             .sized(0.5F, 0.5F)
-            .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, LASER_BEAM_NAME)));
+            .build(ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(KiwiMod.MOD_ID, LASER_BEAM_NAME)));
     public static final EntityType<KiwiEggEntity> KIWI_EGG = EntityType.Builder
             .of((EntityType.EntityFactory<KiwiEggEntity>)KiwiEggEntity::new, MobCategory.MISC)
             .noLootTable()
             .updateInterval(20)
             .sized(0.25F, 0.25F)
-            .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(KiwiMod.MOD_ID, KIWI_EGG_NAME)));
+            .build(ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(KiwiMod.MOD_ID, KIWI_EGG_NAME)));
 
     public static void addCatGoal(Cat cat, GoalSelector targetSelector){
         targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(cat, KiwiEntity.class, true));

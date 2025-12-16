@@ -1,5 +1,6 @@
 package jagm.jagmkiwis;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.IntFunction;
 
@@ -17,6 +18,7 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
@@ -31,7 +33,7 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.world.entity.animal.feline.Cat;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
@@ -182,7 +184,10 @@ public class KiwiEntity extends Animal implements RangedAttackMob {
 
 	private void setVariant(Variant variant) {
 		if (variant == Variant.LASER) {
-			this.getAttribute(Attributes.ARMOR).setBaseValue(8.0D);
+			AttributeInstance attribute = this.getAttribute(Attributes.ARMOR);
+			if (attribute != null) {
+				attribute.setBaseValue(8.0D);
+			}
 			this.goalSelector.addGoal(3, new RangedAttackGoal(this, 1.0D, 20, 40, 20.0F));
 			this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 			this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, true, (target, level) -> !(target instanceof Creeper)));

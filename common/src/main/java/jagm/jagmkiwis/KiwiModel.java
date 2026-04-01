@@ -1,6 +1,5 @@
 package jagm.jagmkiwis;
 
-import net.minecraft.client.model.BabyModelTransform;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -9,14 +8,10 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
-import java.util.Set;
-
 public class KiwiModel extends EntityModel<KiwiRenderState> {
 
 	public static final ModelLayerLocation KIWI_LAYER = new ModelLayerLocation(Identifier.fromNamespaceAndPath(KiwiMod.MOD_ID, "kiwi"), "main");
-	public static final ModelLayerLocation BABY_KIWI_LAYER = new ModelLayerLocation(Identifier.fromNamespaceAndPath(KiwiMod.MOD_ID, "baby_kiwi"), "main");
 
-	public static final MeshTransformer BABY_TRANSFORMER = new BabyModelTransform(false, 2.0F, 0.5F, Set.of("head"));
 	private final ModelPart head;
 	private final ModelPart leftLeg;
 	private final ModelPart rightLeg;

@@ -10,7 +10,7 @@ public class KiwiRenderer extends AgeableMobRenderer<KiwiEntity, KiwiRenderState
 	private static final Identifier LASER_KIWI = Identifier.fromNamespaceAndPath(KiwiMod.MOD_ID, "textures/entity/laser_kiwi.png");
 
 	public KiwiRenderer(Context context) {
-		super(context, new KiwiModel(context.bakeLayer(KiwiModel.KIWI_LAYER)), new KiwiModel(context.bakeLayer(KiwiModel.BABY_KIWI_LAYER)), 0.3F);
+		super(context, new KiwiModel(context.bakeLayer(KiwiModel.KIWI_LAYER)), new KiwiModel(context.bakeLayer(BabyKiwiModel.BABY_KIWI_LAYER)), 0.3F);
 	}
 
 	@Override

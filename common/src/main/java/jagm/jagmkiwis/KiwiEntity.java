@@ -1,6 +1,5 @@
 package jagm.jagmkiwis;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.IntFunction;
 
@@ -169,7 +168,7 @@ public class KiwiEntity extends Animal implements RangedAttackMob {
 
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState blockState) {
-		this.playSound(SoundEvents.CHICKEN_STEP, 0.15F, 1.0F);
+		this.playSound(SoundEvents.CHICKEN_STEP.value(), 0.15F, 1.0F);
 	}
 
 	@Override
@@ -190,7 +189,7 @@ public class KiwiEntity extends Animal implements RangedAttackMob {
 			}
 			this.goalSelector.addGoal(3, new RangedAttackGoal(this, 1.0D, 20, 40, 20.0F));
 			this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
-			this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, true, (target, level) -> !(target instanceof Creeper)));
+			this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, true, (target, _) -> !(target instanceof Creeper)));
 		}
 		else {
 			this.goalSelector.addGoal(1, new PanicGoal(this, 1.0D));

@@ -28,8 +28,8 @@ public class FabricEntrypoint implements ModInitializer {
         FabricDefaultAttributeRegistry.register(KiwiModEntities.KIWI, KiwiEntity.createAttributes());
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.FOREST, Biomes.FLOWER_FOREST, Biomes.BIRCH_FOREST, Biomes.OLD_GROWTH_BIRCH_FOREST, Biomes.CHERRY_GROVE, Biomes.DARK_FOREST), MobCategory.CREATURE, KiwiModEntities.KIWI, 10, 3, 4);
         SpawnPlacements.register(KiwiModEntities.KIWI, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
-        ServerEntityEvents.ENTITY_LOAD.register((entity, serverLevel) -> {
-            if(entity instanceof Cat cat){
+        ServerEntityEvents.ENTITY_LOAD.register((entity, _) -> {
+            if (entity instanceof Cat cat) {
                 KiwiModEntities.addCatGoal(cat, cat.targetSelector);
             }
         });

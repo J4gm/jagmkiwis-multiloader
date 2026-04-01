@@ -46,11 +46,11 @@ public class KiwiModEntities {
 
     public static SpawnGroupData finalizeZombieSpawn(Zombie zombie, ServerLevelAccessor level, SpawnGroupData spawnGroupData, DifficultyInstance difficulty){
         RandomSource random = level.getRandom();
-        if(spawnGroupData == null){
+        if (spawnGroupData == null) {
             spawnGroupData = new Zombie.ZombieGroupData(Zombie.getSpawnAsBabyOdds(random), true);
         }
-        if(spawnGroupData instanceof Zombie.ZombieGroupData zombieGroupData){
-            if(zombieGroupData.isBaby && zombieGroupData.canSpawnJockey){
+        if (spawnGroupData instanceof Zombie.ZombieGroupData zombieGroupData) {
+            if (zombieGroupData.isBaby && zombieGroupData.canSpawnJockey) {
                 if (random.nextFloat() < KIWI_JOCKEY_CHANCE) {
                     List<KiwiEntity> list = level.getEntitiesOfClass(KiwiEntity.class, zombie.getBoundingBox().inflate(5.0F, 3.0F, 5.0F), EntitySelector.ENTITY_NOT_BEING_RIDDEN);
                     if (!list.isEmpty()) {

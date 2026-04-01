@@ -31,8 +31,8 @@ public class KiwiEggEntity extends ThrowableItemProjectile {
     @Override
     public void handleEntityEvent(byte id) {
         if (id == 3) {
-            for(int i = 0; i < 8; ++i) {
-                this.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, this.getItem()), this.getX(), this.getY(), this.getZ(), ((double)this.random.nextFloat() - 0.5) * 0.08, ((double)this.random.nextFloat() - 0.5) * 0.08, ((double)this.random.nextFloat() - 0.5) * 0.08);
+            for (int i = 0; i < 8; ++i) {
+                this.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, this.getItem().getItem()), this.getX(), this.getY(), this.getZ(), ((double)this.random.nextFloat() - 0.5) * 0.08, ((double)this.random.nextFloat() - 0.5) * 0.08, ((double)this.random.nextFloat() - 0.5) * 0.08);
             }
         }
     }
@@ -40,7 +40,7 @@ public class KiwiEggEntity extends ThrowableItemProjectile {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
-        if(this.level() instanceof ServerLevel serverLevel) {
+        if (this.level() instanceof ServerLevel serverLevel) {
             result.getEntity().hurtServer(serverLevel, this.damageSources().thrown(this, this.getOwner()), 0.0F);
         }
     }
@@ -54,7 +54,7 @@ public class KiwiEggEntity extends ThrowableItemProjectile {
                 if (this.random.nextInt(32) == 0) {
                     i = 4;
                 }
-                for(int j = 0; j < i; ++j) {
+                for (int j = 0; j < i; ++j) {
                     KiwiEntity kiwi = KiwiModEntities.KIWI.create(this.level(), EntitySpawnReason.TRIGGERED);
                     if (kiwi != null) {
                         kiwi.setAge(-24000);

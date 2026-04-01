@@ -66,7 +66,7 @@ public class LaserBeamEntity extends AbstractArrow {
                 ((LivingEntity) shooter).setLastHurtMob(target);
             }
         }
-        if(this.level() instanceof ServerLevel serverLevel){
+        if (this.level() instanceof ServerLevel serverLevel) {
             boolean flag = target.getType() == EntityType.ENDERMAN;
             if (target.hurtServer(serverLevel, damagesource, (float) i)) {
                 if (flag) {
@@ -87,8 +87,8 @@ public class LaserBeamEntity extends AbstractArrow {
     @Override
     public void tick() {
         super.tick();
-        if(this.getDeltaMovement().length() < 1.0D) {
-            if(this.level().isClientSide()){
+        if (this.getDeltaMovement().length() < 1.0D) {
+            if (this.level().isClientSide()) {
                 this.makePoofParticles();
             }
             else {
@@ -99,7 +99,7 @@ public class LaserBeamEntity extends AbstractArrow {
     }
 
     private void makePoofParticles() {
-        for(int i = 0; i < 10; ++i) {
+        for (int i = 0; i < 10; ++i) {
             double d = this.random.nextGaussian() * 0.02;
             double e = this.random.nextGaussian() * 0.02;
             double f = this.random.nextGaussian() * 0.02;

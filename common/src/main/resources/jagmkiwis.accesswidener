@@ -1,2 +1,2 @@
-accessWidener v2 named
+classTweaker v1 official
 accessible field net/minecraft/world/entity/Mob targetSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;
